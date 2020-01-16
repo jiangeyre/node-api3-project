@@ -14,18 +14,34 @@ router.get('/', (req, res) => {
     })
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', validatePostId, (req, res) => {
   let id = req.params.id;
 
-  POST.getById
+  POST.getById(id)
+    .then(post => {
+      res.status(200).json(post);
+    })
+    .catch(err => {
+      res.status(500).json({ error: "The post could not be retrieved. "});
+    })
 });
 
 router.delete('/:id', (req, res) => {
   // do your magic!
 });
 
-router.put('/:id', (req, res) => {
-  // do your magic!
+router.put('/:id', validatePostId, (req, res) => {
+  let id = req.params.id;
+  let post = req.body;
+
+  POST.update(id, post)
+    .then(upPost => {
+      console.log('Update success.');
+      res.status(200).json(upPost);
+    })
+    .catch(err => {
+      res.status(500).json({ error: "The user information could not be updated." });
+    })
 });
 
 // custom middleware
