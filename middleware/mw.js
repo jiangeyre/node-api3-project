@@ -41,4 +41,4 @@ function validatePost(req, res, next) {
     }
 };
 
-module.exports = { validatePost, validateUser, validateUserId} ;
+module.exports = { validatePost, validateUser, validateUserId} 
