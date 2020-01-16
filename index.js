@@ -1,9 +1,19 @@
 // code away!
+const express = require("express");
+const server = express();
+const logger = require('./middleware/logger');
+const userRouter = require("./users/userRouter");
+const postRouter = require('./posts/postRouter');
 
-const server = require('./server');
+server.use(logger());
 
+server.use(express.json());
+const host = process.env.HOST || "0.0.0.0";
 const port = process.env.PORT || 8000;
 
-server.listen(port , () => {
-    console.log(`\n ** Server is running on http://localhost:${port} ** \n`);
+server.use("/users", userRouter);
+server.use("/posts", postRouter);
+
+server.listen(port, () => {
+  console.log(`\n*** Server listening on ${host}:${port}`);
 });
